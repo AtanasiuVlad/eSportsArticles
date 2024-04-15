@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Article>
+@{
+	ViewData["Title"] = "List of Article";
+}
+
+
+<div class="row">
+	@foreach(var item in Model)
+	{
+		<div class="col-md-4 col-xs-6 border-primary mb-3">
+			<div class="card mb-3" style="max-width: 540px;">
+				<div class="row g-0">
+					<div class="col-md-12">
+						<div class="card-header text-white bg-info">
+							<p class="card-text">
+								<h5 class="card-title">
+									@item.articleName
+									<a class="text-white float-end-right"><i class="bg-info bi-pencil-square"></i></a>
+								</h5>
+							</p>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<img src="@item.PictureURL" width="100%" alt="@item.articleName"/>
+					</div>
+					<div class="col-md-6">
+						<div class="card-body">
+							<p class="card-text">@item.Description</p>
+							<p class="card-text"><b>Category: </b>@item.articleCategory </p>
+							<p class="card-text"><b>Start date: </b>@item.startAvailablePeriod.ToString("dd.MM.yyyy")</p>
+							<p class="card-text"><b>End date: </b>@item.endAvailablePeriod.ToString("dd.MM.yyyy")</p>
+							<p class="card-text">
+								<b>Available status: </b>
+								@if(DateTime.Now >= item.endAvailablePeriod)
+								{
+									item.isAvailable = false;
+									<span class="badge bg-danger text-white">@item.isAvailable</span>
+								} else
+								{
+									item.isAvailable = true;
+									<span class="badge bg-success text-white">@item.isAvailable</span>
+								}
+							</p>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="card-footer">
+							<p class="card-text">
+								<a class="btn btn-outline-primary float-right"><i class="bg-info bi-eye-fill"></i>Show details</a>
+								<a class="btn btn-success text-white"><i class="bg-info bi-card-plus"></i>Add to Cart (Price @item.Price.ToString("c")</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+</div>
+
