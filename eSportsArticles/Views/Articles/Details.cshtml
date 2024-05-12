@@ -1,0 +1,85 @@
+﻿@model Article
+@{
+	ViewData["Title"] = "Article details";
+}
+
+
+<div class="row">
+	
+		<div class="col-md-8  offset-2">
+			<div class="card mb-12" >
+				<div class="row g-0">
+					<div class="col-md-12">
+						<div class="card-header text-white bg-info">
+							<p class="card-text">
+								<h5 class="card-title">
+									@Model.articleName
+								</h5>
+							</p>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<img src="@Model.PictureURL" width="100%"  />
+					</div>
+					<div class="col-md-8">
+						<div class="card-body">
+							<p class="card-text">@Model.Description
+							<a asp-controller="Articles" asp-action="Details" asp-route-id="@Model.Id">
+								@Model.articleName
+							</a>
+							</p>
+						<p class="card-text">
+							@Model.Description
+							<a asp-controller="Stores" asp-action="Details" asp-route-id="@Model.Id">
+								@Model.Store.storeName
+							</a>
+						</p>
+							<p class="card-text"><b>Category: </b>@Model.articleCategory </p>
+							<p class="card-text"><b>Start date: </b>@Model.startAvailablePeriod.ToString("dd.MM.yyyy")</p>
+							<p class="card-text"><b>End date: </b>@Model.endAvailablePeriod.ToString("dd.MM.yyyy")</p>
+							<p class="card-text">
+								<b>Available status: </b>
+								@if (DateTime.Now >= Model.endAvailablePeriod)
+								{
+									Model.isAvailable = false;
+									<span class="badge bg-danger text-white">@Model.isAvailable</span>
+								}
+								else
+								{
+									Model.isAvailable = true;
+									<span class="badge bg-success text-white">@Model.isAvailable</span>
+								}
+							</p>
+							<p class="card-text">
+								<b>Store: </b>
+								<hr />
+								<div class="row">
+									@foreach(var store in Model.storeArticles)
+									{
+										<div class="column text-centre">
+											<img class="border-info rounded-circle" src="@store.Store.PictureURL" style="max-width: 150px"/>
+											<br />
+											<a asp-controller="Stores" asp-action="Details" asp-route-id="@store.Store.Id">
+												@store.Store.storeName
+											</a>
+										</div>
+									}
+								</div>
+							</p>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="card-footer">
+							<p class="card-text">
+								<a class="btn btn-outline-primary float-right" asp-action="Index" >
+									Back to List
+								</a>
+								<a class="btn btn-success text-white"><i class="bg-info bi-card-plus"></i>Add to Cart (Price @Model.Price.ToString("c")</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</div>
+

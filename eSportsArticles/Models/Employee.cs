@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using eSportsArticles.Data.Base;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace eSportsArticles.Models
 {
-    public class Employee
+    public class Employee : IEntityBase
     {
         [Key]
         public Guid Id { get; set; }
@@ -30,10 +31,12 @@ namespace eSportsArticles.Models
 		[Required(ErrorMessage = "Salary is required")]
 		public int Salary { get; set; }
 
-        //Store
-        public Guid storeId { get; set; }
-
-        [ForeignKey("storeId")]
+		//Store
+		[ForeignKey("storeId")]
+		public Guid storeId { get; set; }
         public Store Store { get; set; }
+
+
+
     }
 }

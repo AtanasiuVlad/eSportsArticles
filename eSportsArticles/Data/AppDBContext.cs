@@ -16,8 +16,13 @@ namespace eSportsArticles.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
-            modelBuilder.Entity<StoresArticles>().
+			modelBuilder.Entity<Article>()
+			.HasOne(a => a.Store)
+			.WithMany(s => s.Articles)
+			.HasForeignKey(a => a.StoreId)
+			.OnDelete(DeleteBehavior.ClientSetNull);
+
+			modelBuilder.Entity<StoresArticles>().
                 HasOne(s => s.Store).
                 WithMany(a => a.storeArticles).
                 HasForeignKey(s =>s.storeId).
