@@ -3,8 +3,7 @@ using eSportsArticles.Models;
 
 namespace eSportsArticles.Data.Services
 {
-    public interface IEmployeesService : IEntityBaseRepository<Employee>
-    {
-        
+	public interface IStoresServices : IEntityBaseRepository<Store>
+	{
 	}
 }

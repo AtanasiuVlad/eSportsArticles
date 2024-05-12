@@ -21,21 +21,28 @@ namespace eSportsArticles.Controllers
         }
 
         // Get: Employees/Create
+
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("lastName, firstName, Email, Phone, City, employeePosition, Salary")]Employee employee)
+        public async Task<IActionResult> Create([Bind("lastName, firstName, Email, Phone, City, employeePosition, Salary, storeId")]Employee employee)
         {
-            if(!ModelState.IsValid) 
-            {
-                return View(employee);
-            }
-            await _service.AddAsync(employee);
+			if (employee.lastName == null || employee.firstName == null || employee.Email == null ||
+				employee.Phone == null || employee.City == null || employee.employeePosition == null
+				|| employee.Salary == null)
+			{
+				return View(employee);
+			}
+
+
+			await _service.AddAsync(employee);
+
             return RedirectToAction(nameof(Index));
         }
+
 
         //Get: Employees/Details/1
 
@@ -52,10 +59,10 @@ namespace eSportsArticles.Controllers
         }
 
 
-		// Get: Employees/Create
-		public async Task<IActionResult> Edit(Guid Id)
+		// Get: Employees/Edit
+		public async Task<IActionResult> Edit(Guid id)
 		{
-			var employeeDetails = await _service.GetByIdAsync(Id);
+			var employeeDetails = await _service.GetByIdAsync(id);
 
 			if (employeeDetails == null)
 			{
@@ -66,21 +73,35 @@ namespace eSportsArticles.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Edit(Guid Id, [Bind("Id, lastName, firstName, Email, Phone, City, employeePosition, Salary")] Employee employee)
+		public async Task<IActionResult> Edit(Guid id, [Bind(" lastName, firstName, Email, Phone, City, employeePosition, Salary")] Employee newEmployee)
 		{
-			if (!ModelState.IsValid)
+			if (newEmployee.lastName == null || newEmployee.firstName == null || newEmployee.Email == null || 
+				newEmployee.Phone == null || newEmployee.City == null || newEmployee.employeePosition == null
+				|| newEmployee.Salary == null)
 			{
-				return View(employee);
+				return View(newEmployee);
 			}
 
-			
-			employee.Id = Id;
+			var employeeDetails = await _service.GetByIdAsync(id);
 
-			await _service.UpdateAsync(Id, employee);
+			if (employeeDetails == null)
+			{
+				return View("NotFound");
+			}
+
+			employeeDetails.lastName = newEmployee.lastName;
+			employeeDetails.firstName = newEmployee.firstName;
+			employeeDetails.Email = newEmployee.Email;
+			employeeDetails.Phone = newEmployee.Phone;
+			employeeDetails.City = newEmployee.City;
+			employeeDetails.employeePosition = newEmployee.employeePosition;
+			employeeDetails.Salary = newEmployee.Salary;
+
+			await _service.UpdateAsync(id, employeeDetails);
 
 			return RedirectToAction(nameof(Index));
 		}
-		
+
 
 		// Get: Employees/Delete
 		public async Task<IActionResult> Delete(Guid Id)

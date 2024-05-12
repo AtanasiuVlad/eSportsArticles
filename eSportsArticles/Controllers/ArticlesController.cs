@@ -1,4 +1,5 @@
 ﻿using eSportsArticles.Data;
+using eSportsArticles.Data.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,17 +7,24 @@ namespace eSportsArticles.Controllers
 {
     public class ArticlesController : Controller
     {
-        private readonly AppDBContext _context;
+        private readonly IArticlesService _service;
 
-        public ArticlesController(AppDBContext context)
+        public ArticlesController(IArticlesService service)
         {
-                _context = context;
+                _service = service;
         }
 
         public async Task<IActionResult> Index()
         {
-            var articlesList = await _context.Articles.ToListAsync();
+            var articlesList = await _service.GetAllAsync(n => n.Store);
             return View(articlesList);
+        }
+
+        //Get: Articles/Details/Guid
+        public async Task<IActionResult> Details(Guid Id)
+        {
+            var articleDetails = await _service.GetArticleByIdAsync(Id);
+            return View(articleDetails);
         }
     }
 }

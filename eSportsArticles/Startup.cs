@@ -37,7 +37,8 @@ namespace eTickets
 
             //Services configuration
             services.AddScoped<IEmployeesService, EmployeesService>();
-
+            services.AddScoped<IStoresServices, StoresService>();
+            services.AddScoped<IArticlesService, ArticlesService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

@@ -1,10 +1,11 @@
-﻿using eSportsArticles.Data.Enums;
+﻿using eSportsArticles.Data.Base;
+using eSportsArticles.Data.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
 namespace eSportsArticles.Models
 {
-    public class Article
+    public class Article: IEntityBase
     {
         [Key] // [Required]
         public Guid Id { get; set; }
@@ -33,5 +34,7 @@ namespace eSportsArticles.Models
         
         //Relationships
         public List<StoresArticles> storeArticles { get; set;}
+		public Guid StoreId { get; set; }
+		public Store Store { get; set; }
     }
 }
