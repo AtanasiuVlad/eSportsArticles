@@ -17,6 +17,7 @@ namespace eSportsArticles.Controllers
         public async Task<IActionResult> Index()
         {
             var articlesList = await _service.GetAllAsync(n => n.Store);
+            string test = "";
             return View(articlesList);
         }
 
