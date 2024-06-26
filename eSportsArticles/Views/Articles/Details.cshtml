@@ -23,16 +23,30 @@
 					</div>
 					<div class="col-md-8">
 						<div class="card-body">
-							<p class="card-text">@Model.Description
-							<a asp-controller="Articles" asp-action="Details" asp-route-id="@Model.Id">
-								@Model.articleName
-							</a>
+							<p class="card-text">
+							
+								<b>Name: </b>@Model.articleName
+							
 							</p>
 						<p class="card-text">
-							@Model.Description
-							<a asp-controller="Stores" asp-action="Details" asp-route-id="@Model.Id">
-								@Model.Store.storeName
-							</a>
+							
+								<b>Description: </b>@Model.Description
+							
+						</p>
+						<p class="card-text">
+							
+								<b>Color: </b>@Model.Color
+							
+						</p>
+						<p class="card-text">
+							
+								<b>Size: </b>@Model.Size
+							
+						</p>
+						<p class="card-text">
+							
+								<b>Stars: </b>@Model.ratingStars
+							
 						</p>
 							<p class="card-text"><b>Category: </b>@Model.articleCategory </p>
 							<p class="card-text"><b>Start date: </b>@Model.startAvailablePeriod.ToString("dd.MM.yyyy")</p>
@@ -51,19 +65,16 @@
 								}
 							</p>
 							<p class="card-text">
-								<b>Store: </b>
-								<hr />
+								
+								
 								<div class="row">
-									@foreach(var store in Model.storeArticles)
-									{
-										<div class="column text-centre">
-											<img class="border-info rounded-circle" src="@store.Store.PictureURL" style="max-width: 150px"/>
-											<br />
-											<a asp-controller="Stores" asp-action="Details" asp-route-id="@store.Store.Id">
-												@store.Store.storeName
+									<b>Store: </b>
+									<div class="column text-centre">
+											<img class="border-info " src="@Model.Store.PictureURL" style="max-width: 100px"/>
+											<a asp-controller="Stores" asp-action="Details" asp-route-id="@Model.Store.Id">
+												@Model.Store.storeName
 											</a>
-										</div>
-									}
+										</div
 								</div>
 							</p>
 						</div>
